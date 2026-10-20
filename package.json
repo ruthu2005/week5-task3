@@ -1,0 +1,30 @@
+{
+  "name": "student-placement-api",
+  "version": "1.0.0",
+  "description": "Production-ready RESTful API for Student Placement Tracking built with Node.js and Express",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "node test/manual-test.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "rest-api",
+    "crud",
+    "placement-tracker",
+    "pagination",
+    "error-handling"
+  ],
+  "author": "Student Placement Tracker Team",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

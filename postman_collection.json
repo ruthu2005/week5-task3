@@ -1,0 +1,339 @@
+{
+  "info": {
+    "_postman_id": "b3e0d86a-7a1f-4f2a-89a3-5c8e2a149f12",
+    "name": "Student Placement Tracker REST API",
+    "description": "Comprehensive Postman test collection for Student Placement Tracker RESTful API built with Node.js and Express. Demonstrates all CRUD endpoints, query filtering, pagination, sorting, dynamic parameters, and centralized error handling responses.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Students Collection",
+      "item": [
+        {
+          "name": "1. GET All Students (Default Pagination)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students"]
+            },
+            "description": "Retrieves the first page of student placement records with default limit of 10."
+          },
+          "response": []
+        },
+        {
+          "name": "2. GET Students (Pagination: Page 2, Limit 4)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students?page=2&limit=4",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students"],
+              "query": [
+                { "key": "page", "value": "2" },
+                { "key": "limit", "value": "4" }
+              ]
+            },
+            "description": "Fetches page 2 with 4 records per page, demonstrating pagination metadata."
+          },
+          "response": []
+        },
+        {
+          "name": "3. GET Students - Filter by Department",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students?department=Computer Science",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students"],
+              "query": [
+                { "key": "department", "value": "Computer Science" }
+              ]
+            },
+            "description": "Filters student records specifically for Computer Science department."
+          },
+          "response": []
+        },
+        {
+          "name": "4. GET Students - Filter by Status & Min CGPA",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students?status=Placed&minCgpa=8.5",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students"],
+              "query": [
+                { "key": "status", "value": "Placed" },
+                { "key": "minCgpa", "value": "8.5" }
+              ]
+            },
+            "description": "Compound filter: students who are Placed and have CGPA >= 8.5."
+          },
+          "response": []
+        },
+        {
+          "name": "5. GET Students - Search by Keyword",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students?search=React",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students"],
+              "query": [
+                { "key": "search", "value": "React" }
+              ]
+            },
+            "description": "Full-text search matching name, roll number, or technical skills."
+          },
+          "response": []
+        },
+        {
+          "name": "6. GET Students - Sort by Package (Descending)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students?status=Placed&sortBy=packageOffered&order=desc",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students"],
+              "query": [
+                { "key": "status", "value": "Placed" },
+                { "key": "sortBy", "value": "packageOffered" },
+                { "key": "order", "value": "desc" }
+              ]
+            },
+            "description": "Sorts placed students from highest salary package to lowest."
+          },
+          "response": []
+        },
+        {
+          "name": "7. GET Single Student by Dynamic ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students", "1"]
+            },
+            "description": "Retrieves student record #1 via dynamic route parameter."
+          },
+          "response": []
+        },
+        {
+          "name": "8. POST Create Student (Valid Body)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Ishaan Verma\",\n  \"rollNumber\": \"CS2021205\",\n  \"email\": \"ishaan.verma@college.edu\",\n  \"department\": \"Computer Science\",\n  \"cgpa\": 9.1,\n  \"skills\": [\"Go\", \"Kubernetes\", \"PostgreSQL\"],\n  \"placementStatus\": \"Placed\",\n  \"company\": \"Atlassian\",\n  \"packageOffered\": 2600000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/students",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students"]
+            },
+            "description": "Creates a new student placement record (201 Created)."
+          },
+          "response": []
+        },
+        {
+          "name": "9. PUT Update Student Record",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"placementStatus\": \"Placed\",\n  \"company\": \"Google Cloud\",\n  \"packageOffered\": 3400000,\n  \"skills\": [\"Go\", \"Kubernetes\", \"PostgreSQL\", \"GCP\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/students/3",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students", "3"]
+            },
+            "description": "Updates placement status and compensation for student #3."
+          },
+          "response": []
+        },
+        {
+          "name": "10. DELETE Student Record",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students/12",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students", "12"]
+            },
+            "description": "Deletes student record with ID 12."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Analytics & Utilities",
+      "item": [
+        {
+          "name": "GET Placement Statistics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students", "stats"]
+            },
+            "description": "Aggregates placement metrics: count, rate %, average package, department breakdown."
+          },
+          "response": []
+        },
+        {
+          "name": "POST Reset Database to Seed Data",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students/reset",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students", "reset"]
+            },
+            "description": "Resets in-memory student database to original seed state."
+          },
+          "response": []
+        },
+        {
+          "name": "GET System Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            },
+            "description": "Returns server status and uptime."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Error Handling Tests",
+      "item": [
+        {
+          "name": "GET 404 - Student Not Found",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students/9999",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students", "9999"]
+            },
+            "description": "Verifies 404 response for non-existent student ID."
+          },
+          "response": []
+        },
+        {
+          "name": "GET 400 - Invalid ID Format",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students/abc",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students", "abc"]
+            },
+            "description": "Verifies 400 Bad Request when passing non-integer ID parameter."
+          },
+          "response": []
+        },
+        {
+          "name": "POST 400 - Validation Failure (Missing Fields)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/students",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students"]
+            },
+            "description": "Verifies 400 response with detailed validation error list."
+          },
+          "response": []
+        },
+        {
+          "name": "POST 409 - Duplicate Roll Number",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Duplicate User\",\n  \"rollNumber\": \"CS2021001\",\n  \"email\": \"unique.email@college.edu\",\n  \"department\": \"Computer Science\",\n  \"cgpa\": 8.5\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/students",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students"]
+            },
+            "description": "Verifies 409 Conflict when attempting to register existing roll number."
+          },
+          "response": []
+        },
+        {
+          "name": "GET 404 - Undefined Route",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/non-existent-route",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "non-existent-route"]
+            },
+            "description": "Verifies global notFoundHandler catches undefined endpoints."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
